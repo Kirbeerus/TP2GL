@@ -20,7 +20,12 @@ import static org.mockito.Mockito.*;
  */
 public class PanierTest {
     
+    private Fruit mocko1;
+    private Fruit mocko2;
+    
     public PanierTest() {
+        
+        
     }
     
     @BeforeClass
@@ -33,6 +38,12 @@ public class PanierTest {
     
     @Before
     public void setUp() {
+        mocko1 = mock(Fruit.class);
+        mocko2 = mock(Fruit.class);
+        
+        when(mocko1.getPrix())thenReturn(1.0);
+        when(mocko2.getPrix())thenReturn(1.5);
+        
     }
     
     @After
@@ -196,6 +207,20 @@ public class PanierTest {
     @Test
     public void testGetPrix() {
         
+       
+    }
+    
+    /**
+     * Test of getPrix method, of class Panier with Mock.
+     */
+    @Test
+    public void testGetPrixMock() {
+        
+        
+        System.out.println("testGetPrixMock");
+        
+        Panier panier = new Panier(3);
+        panier.ajoute()
        
     }
 

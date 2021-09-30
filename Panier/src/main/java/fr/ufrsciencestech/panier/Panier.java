@@ -1,3 +1,5 @@
+package fr.ufrsciencestech.panier;
+
 import java.util.*;
 /**
  *

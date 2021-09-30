@@ -1,3 +1,6 @@
+package fr.ufrsciencestech.panier;
+
+
 /**
  *
  * @author roudet
