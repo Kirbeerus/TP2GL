@@ -11,8 +11,8 @@ public class Panier {
 
     //groupe 1
     public Panier(int contenanceMax){  //initialise un panier vide ayant une certaine contenance maximale (precisee en parametre)
-
-		this.contenanceMax = contenanceMax;
+        this.fruits = new ArrayList<Fruit>();
+        this.contenanceMax = contenanceMax;
 
     }
 
@@ -64,28 +64,45 @@ public class Panier {
 
     //groupe 4
     public void ajout(Fruit o) throws PanierPleinException{  //ajoute le fruit o a la fin du panier si celui-ci n'est pas plein
-
+        if(this.fruits.size() < this.contenanceMax){
+            if(o != null){
+                this.fruits.add(o);
+            }
+        }else{
+            throw new PanierPleinException();
+        }
+        
     }
 
     //groupe 5
     public void retrait() throws PanierVideException{ //retire le dernier fruit du panier si celui-ci n'est pas vide
-
+        if(this.fruits.size() != 0){
+            this.fruits.remove(this.fruits.size()-1);
+        }
     }
 
     //groupe 6
     public double getPrix(){  //calcule le prix du panier par addition des prix de tous les fruits contenus dedans
-	return 0;
+	double prix = 0;
+        for(Fruit f : fruits){
+            prix = prix+f.getPrix();
+        }
+        return prix;
     }
 
     //groupe 7
     public void boycotteOrigine(String origine){  //supprime du panier tous les fruits provenant du pays origine
-
+        for(Fruit f : fruits){
+            if(f.getOrigine() == origine){
+                this.fruits.remove(f);
+            }
+        }
     }
 
     //groupe 8
     @Override
     public boolean equals(Object o){  ///predicat pour tester si 2 paniers sont equivalents : s'ils contiennent exactement les memes fruits
-        return false;
+        
     }
 
     //tests

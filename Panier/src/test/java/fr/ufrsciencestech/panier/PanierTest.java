@@ -20,8 +20,9 @@ import static org.mockito.Mockito.*;
  */
 public class PanierTest {
     
-    private Fruit mocko1;
-    private Fruit mocko2;
+    private  Fruit mocko1;
+    private  Fruit mocko2;
+    private  Fruit mocko3;
     
     public PanierTest() {
         
@@ -38,11 +39,14 @@ public class PanierTest {
     
     @Before
     public void setUp() {
+       
+        
         mocko1 = mock(Fruit.class);
         mocko2 = mock(Fruit.class);
+        mocko3 = mock(Fruit.class);
         
-        when(mocko1.getPrix())thenReturn(1.0);
-        when(mocko2.getPrix())thenReturn(1.5);
+        when(mocko1.getPrix()).thenReturn(1.0);
+        when(mocko2.getPrix()).thenReturn(0.5);
         
     }
     
@@ -181,12 +185,65 @@ public class PanierTest {
      */
     @Test
     public void testAjout() throws Exception {
-        System.out.println("ajout");
-        Fruit o = null;
-        Panier instance = null;
-        instance.ajout(o);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("AJout");
+        
+        Panier panier = new Panier(2);
+        
+        Fruit f1 = new Orange();
+        Fruit f2 = new Orange();
+        panier.ajout(f1);
+        assertTrue(panier.getTaillePanier() == 1);
+        
+        panier.ajout(null);
+        assertTrue(panier.getTaillePanier() == 1);
+        
+        panier.ajout(f2);
+        assertTrue(panier.getTaillePanier() == 2);
+        
+    }
+    
+    /**
+     * Test of ajout method, of class Panier with mocko.
+     */
+    @Test
+    public void testAjoutMocko() throws Exception {
+        System.out.println("AJout mock");
+        
+        Panier panier = new Panier(2);
+        
+        panier.ajout(mocko1);
+        assertTrue(panier.getTaillePanier() == 1);
+        
+        panier.ajout(null);
+        assertTrue(panier.getTaillePanier() == 1);
+        
+        panier.ajout(mocko2);
+        assertTrue(panier.getTaillePanier() == 2);
+                
+        
+    }
+    
+    /**
+     * Test of ajout method, of class Panier with mocko.
+     */
+    @Test(expected=PanierPleinException.class)
+    public void testAjoutMockoInvalide() throws Exception {
+        System.out.println("AJout mock");
+        
+        Panier panier = new Panier(2);
+        
+        panier.ajout(mocko1);
+        assertTrue(panier.getTaillePanier() == 1);
+        
+        panier.ajout(null);
+        assertTrue(panier.getTaillePanier() == 1);
+        
+        panier.ajout(mocko2);
+        assertTrue(panier.getTaillePanier() == 2);
+        
+        panier.ajout(mocko3);
+        
+        
     }
 
     /**
@@ -205,8 +262,23 @@ public class PanierTest {
      * Test of getPrix method, of class Panier.
      */
     @Test
-    public void testGetPrix() {
+    public void testGetPrix() throws PanierPleinException, PanierVideException  {
+         System.out.println("testGetPrixMock");
         
+        Panier panier = new Panier(3);
+        Fruit f1 = new Orange(1.0,"espagne");
+        Fruit f2 = new Orange(0.5,"espagne");
+        panier.ajout(f1);
+        panier.ajout(f2);
+        double res = panier.getPrix();
+        
+        //test unitaires
+        assertTrue(res == 1.5);
+        
+        panier.retrait();
+        res = panier.getPrix();
+        //test d'interactions
+        assertTrue(res == 1.0);
        
     }
     
@@ -214,13 +286,28 @@ public class PanierTest {
      * Test of getPrix method, of class Panier with Mock.
      */
     @Test
-    public void testGetPrixMock() {
+    public void testGetPrixMock() throws PanierPleinException, PanierVideException {
         
         
         System.out.println("testGetPrixMock");
         
         Panier panier = new Panier(3);
-        panier.ajoute()
+        panier.ajout(mocko1);
+        panier.ajout(mocko2);
+        double res = panier.getPrix();
+        
+        //test unitaires
+        verify(mocko1, times(1)).getPrix();
+        verify(mocko2, times(1)).getPrix();
+        assertTrue(res == 1.5);
+        
+        panier.retrait();
+        res = panier.getPrix();
+        //test d'interactions
+        verify(mocko1, times(2)).getPrix();
+        verify(mocko2, times(1)).getPrix();
+        assertTrue(res == 1.0);
+        
        
     }
 
