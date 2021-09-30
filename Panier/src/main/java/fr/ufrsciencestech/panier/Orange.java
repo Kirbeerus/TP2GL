@@ -1,10 +1,8 @@
-package fr.ufrsciencestech.panier;
-
 /**
  *
  * @author roudet
  */
-public class Orange {
+public class Orange implements Fruit{
     private double prix;
     private String origine;
 	
@@ -64,13 +62,6 @@ public class Orange {
 
     public static void main (String[] args){
         //Ecrire ici vos tests
-		System.out.println("premier test Orange");
-		Orange or1 = new Orange();
-		Orange or2 = new Orange(0.5,"Espagne");
-		System.out.println(or1.equals(or2));
-		Orange or3 = new Orange(-4,"France");
-		System.out.println(or3.toString());
-		System.out.println(or3.getPrix());
-		System.out.println(or3.getOrigine());
+	System.out.println("premier test Orange");
    }
 }

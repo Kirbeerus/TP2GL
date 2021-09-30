@@ -1,10 +1,8 @@
-package fr.ufrsciencestech.panier;
-
 /**
  *
  * @author barault
  */
-public class Kiwi {
+public class Kiwi implements Fruit {
     private double prix;
     private String origine;
 	
@@ -46,6 +44,7 @@ public class Kiwi {
     @Override
     public String toString(){
         return "Kiwi de " + origine + " a " + prix + " euros";
+
     }
 
     @Override
