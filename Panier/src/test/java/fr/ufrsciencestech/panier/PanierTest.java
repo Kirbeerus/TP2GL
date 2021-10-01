@@ -326,17 +326,29 @@ public class PanierTest {
 
     /**
      * Test of equals method, of class Panier.
+     * @throws PanierPleinException 
      */
     @Test
-    public void testEquals() {
+    public void testEquals() throws PanierPleinException {
         System.out.println("equals");
-        Object o = null;
-        Panier instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(o);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Panier p1 = new Panier(3);
+        Panier p2 = new Panier(5);
+        
+        Fruit f1 = new Orange();
+        Fruit f2 = new Orange(0.5,"espagne");
+        Fruit f3 = new Kiwi();
+        
+        p1.ajout(f3);
+        p1.ajout(f1);
+        p1.ajout(f2);
+        
+        
+        p2.ajout(f2);
+        p2.ajout(f3);
+        p2.ajout(f1);
+        
+        assertEquals(p2,p1);
+        
     }
 
     /**
