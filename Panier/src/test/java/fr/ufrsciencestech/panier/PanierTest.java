@@ -313,15 +313,54 @@ public class PanierTest {
 
     /**
      * Test of boycotteOrigine method, of class Panier.
+     * @throws PanierPleinException 
      */
     @Test
-    public void testBoycotteOrigine() {
+    public void testBoycotteOrigine() throws PanierPleinException {
         System.out.println("boycotteOrigine");
-        String origine = "";
-        Panier instance = null;
-        instance.boycotteOrigine(origine);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Panier p1 = new Panier(3);
+        Panier p2 = new Panier(3);
+        Panier p3 = new Panier(3);
+        Panier p4 = new Panier(3);
+        
+        Fruit f1 = new Orange(0.5,"Espagne");
+        Fruit f2 = new Kiwi(0.5,"Espagne");
+        Fruit f3 = new Orange(0.5,"France");
+        Fruit f4 = new Orange(0.5,"Madrid");
+        
+        p1.boycotteOrigine("Espagne");
+        assertTrue(p1.getTaillePanier() == 0);
+        p1.boycotteOrigine("123");
+        assertTrue(p1.getTaillePanier() == 0);
+        
+        p2.ajout(f1);
+        
+        p2.boycotteOrigine("");
+        assertTrue(p2.getTaillePanier() == 1);
+        
+        p2.boycotteOrigine("Espagne");
+        assertTrue(p2.getTaillePanier() == 0);
+        
+        
+        p3.ajout(f1);
+        p3.ajout(f3);
+        
+        p3.boycotteOrigine("123");
+        assertTrue(p3.getTaillePanier() == 2);
+        
+        p3.boycotteOrigine("Espagne");
+        assertTrue(p3.getTaillePanier() == 1);
+        
+        p4.ajout(f1);
+        p4.ajout(f2);
+        p4.ajout(f3);
+        
+        p4.boycotteOrigine("123");
+        assertTrue(p4.getTaillePanier() == 3);
+        
+        p4.boycotteOrigine("Espagne");
+        assertTrue(p4.getTaillePanier() == 1);
+        
     }
 
     /**
@@ -338,14 +377,14 @@ public class PanierTest {
         Fruit f2 = new Orange(0.5,"espagne");
         Fruit f3 = new Kiwi();
         
-        p1.ajout(f3);
         p1.ajout(f1);
         p1.ajout(f2);
+        p1.ajout(f3);
         
         
+        p2.ajout(f1);
         p2.ajout(f2);
         p2.ajout(f3);
-        p2.ajout(f1);
         
         assertEquals(p2,p1);
         

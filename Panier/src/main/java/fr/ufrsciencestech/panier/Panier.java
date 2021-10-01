@@ -92,29 +92,44 @@ public class Panier {
 
     //groupe 7
     public void boycotteOrigine(String origine){  //supprime du panier tous les fruits provenant du pays origine
-        for(Fruit f : fruits){
-            if(f.getOrigine() == origine){
-                this.fruits.remove(f);
-            }
-        }
+    	int i = 0;					//A
+    	while(i < getFruits().size()){			//B
+            if(getFruits().get(i).getOrigine().equals(origine)) {
+            	getFruits().remove(i);			//D
+            }          	
+            else {
+            	i++ ;
+            }								 
+    		
+       }
     }
 
     //groupe 8
     @Override
     public boolean equals(Object o){  ///predicat pour tester si 2 paniers sont equivalents : s'ils contiennent exactement les memes fruits
-        boolean egal = false;
-    	if(o.getClass() == Panier.class) {
-    		if(this.fruits.size() == ((Panier) o).getTaillePanier()) {
-    			for(int i = 0;i<this.fruits.size();i++) {
-            		ArrayList<Fruit> commun = new ArrayList<Fruit>(this.fruits);
-            		commun.retainAll(((Panier) o).getFruits());
-            		if(commun.size() == this.fruits.size()) {
-            			egal = true;
-            		}
-            	}
-    		}   	
+    	if(o == null)
+            return false;
+
+        boolean result = false;
+        if(o instanceof Panier){
+            Panier p = (Panier) o;
+            if(p.getTaillePanier() == this.getTaillePanier())
+            {
+                int i=0;
+                while(i < p.getTaillePanier())
+                {					 
+                    if( p.getFruits().get(i).getPrix() != this.getFruits().get(i).getPrix() ||
+                        !p.fruits.get(i).getOrigine().equals(this.fruits.get(i).getOrigine()) )
+                            break;				
+                    i++ ;	
+                }
+                if(i == p.getTaillePanier()) //toutes les oranges parcourues sont les mêmes
+                    result = true;
+            }
+            else //les 2 paniers n'ont pas le même nb d'oranges
+                result = false;
         }
-        return egal;
+        return result;
     }
 
     //tests
