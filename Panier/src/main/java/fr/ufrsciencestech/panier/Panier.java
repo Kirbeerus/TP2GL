@@ -69,6 +69,8 @@ public class Panier extends Observable {
         if(this.fruits.size() < this.contenanceMax){
             if(o != null){
                 this.fruits.add(o);
+                setChanged();
+                notifyObservers(this);
             }
         }else{
             throw new PanierPleinException();
@@ -80,6 +82,8 @@ public class Panier extends Observable {
     public void retrait() throws PanierVideException{ //retire le dernier fruit du panier si celui-ci n'est pas vide
         if(this.fruits.size() != 0){
             this.fruits.remove(this.fruits.size()-1);
+            setChanged();
+            notifyObservers(this);
         }
     }
 

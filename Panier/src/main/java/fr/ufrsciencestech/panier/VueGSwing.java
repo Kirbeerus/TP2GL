@@ -2,6 +2,11 @@ package fr.ufrsciencestech.panier;
 
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import java.awt.*;
+import javax.swing.*;
+import java.util.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,8 +24,47 @@ public class VueGSwing extends javax.swing.JFrame implements Observer {
      * Creates new form VueGSwing
      */
     public VueGSwing() {
-        initComponents();
+        super ("Panier de fruits");
+        inc = new JButton("+");
+        dec = new JButton("-");
+        affiche = new JLabel("0", JLabel.CENTER);
+        inc.setName("Plus");
+        dec.setName("Moins");
+        affiche.setName("Affiche");
+        add(inc, BorderLayout.NORTH);
+        add(dec, BorderLayout.SOUTH);
+        add(affiche, BorderLayout.CENTER);
+        
+        this.pack();
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
     }
+
+    public JButton getDec() {
+        return dec;
+    }
+
+    public JButton getInc() {
+        return inc;
+    }
+
+    public JLabel getAffiche() {
+        return affiche;
+    }
+
+    public void setAffiche(JLabel affiche) {
+        this.affiche = affiche;
+    }
+
+    public void setDec(JButton dec) {
+        this.dec = dec;
+    }
+
+    public void setInc(JButton inc) {
+        this.inc = inc;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,22 +75,27 @@ public class VueGSwing extends javax.swing.JFrame implements Observer {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        inc = new javax.swing.JButton();
+        dec = new javax.swing.JButton();
+        affiche = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("+");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        inc.setText("+");
+        inc.setName("Plus");
+        inc.setActionCommand("Plus");
+        inc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                incActionPerformed(evt);
             }
         });
 
-        jButton2.setText("-");
+        dec.setText("-");
+        dec.setName("Moins");
+        dec.setActionCommand("decrease");
 
-        jLabel1.setText("0");
+        affiche.setName("Affiche");
+        affiche.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -57,31 +106,31 @@ public class VueGSwing extends javax.swing.JFrame implements Observer {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(127, 127, 127)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)))
+                            .addComponent(dec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(inc, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(157, 157, 157)
-                        .addComponent(jLabel1)))
+                        .addComponent(affiche)))
                 .addContainerGap(201, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addComponent(jButton1)
+                .addComponent(inc)
                 .addGap(45, 45, 45)
-                .addComponent(jLabel1)
+                .addComponent(affiche)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(dec)
                 .addGap(87, 87, 87))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void incActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_incActionPerformed
 
     /**
      * @param args the command line arguments
@@ -113,19 +162,26 @@ public class VueGSwing extends javax.swing.JFrame implements Observer {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VueGSwing().setVisible(true);
+                new VueGSwing().setVisible(true);              
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel affiche;
+    private javax.swing.JButton dec;
+    private javax.swing.JButton inc;
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void update(Observable arg0, Object arg1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Observable arg0, Object panier) {
+        String s = ((Panier) panier).getTaillePanier()+"";
+        getAffiche().setText(s);
+    }
+    
+    public void ajoutController(Controller c){
+        getInc().addActionListener(c);
+        getDec().addActionListener(c);
+        
     }
 }
