@@ -1,11 +1,13 @@
 package fr.ufrsciencestech.panier;
 
 import java.util.*;
+
 /**
  *
  * @author roudet
  */
-public class Panier {
+public class Panier extends Observable {
+    
     private ArrayList<Fruit> fruits;  //attribut pour stocker les fruits
     private int contenanceMax;        //nb maximum d'oranges que peut contenir le panier
 
